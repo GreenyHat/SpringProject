@@ -2,14 +2,31 @@ package com.brainstorm.springboot2.app.springbootapp.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+// import org.springframework.ui.ModelMap; //OTRA FORMA, COMO SE PONE ABAJO:
+// public String index(ModelMap model) {// implementacion de interfaz con ModelMap
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.brainstorm.springboot2.app.springbootapp.models.Usuarios;
 
 @Controller
+@RequestMapping("/app")
 public class IndexController {
 
     @GetMapping({ "/index", "/", "/home" }) // con {x,y...n} indicamos que queremos mapearla a mas de una ruta
     public String index(Model model) {// implementacion de interfaz con Model
+        model.addAttribute("titulo", "Hola SpringFramework!!");
         return "index";
+    }
+
+    @RequestMapping("/perfil")
+    public String perfil(Model model){
+        Usuarios usuario = new Usuarios();
+        usuario.setApellido("Kaverga");
+        usuario.setNombre("Kerry");
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("titulo", "Perfil de usuario: ".concat(usuario.getNombre()));
+        return "perfil";
     }
 
     /*
